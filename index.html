@@ -436,7 +436,7 @@ textarea { min-height: 90px; font-size: 13px; resize: vertical; }
 
   function openCatSheet(c) {
     var color = c ? c.color : PRESETS[0];
-    var name = h('input', { type: 'text', id: 'catName', maxlength: '20', value: c ? c.name : '', placeholder: '예: 운동' });
+    var name = h('input', { type: 'text', id: 'catName', maxlength: '20', value: c ? c.name : '', placeholder: '카테고리 이름 입력' });
     var prev = h('span', { class: 'cname prev' }, c ? c.name : '미리보기');
     function upd() { prev.textContent = name.value.trim() || '미리보기'; prev.style.color = color; }
     name.addEventListener('input', upd);
