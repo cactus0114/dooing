@@ -223,6 +223,13 @@ textarea { min-height: 90px; font-size: 13px; font-family: ui-monospace, Menlo, 
     return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.62 ? '#1c2421' : '#ffffff';
   }
 
+```js
+  function applyAccent(hex) {
+    var c = okColor(hex);
+    document.documentElement.style.setProperty('--accent', c);
+    document.documentElement.style.setProperty('--accent-fg', textOn(c));
+  }
+
   function h(tag, props) {
     var el = document.createElement(tag);
     if (props) Object.keys(props).forEach(function (k) {
@@ -298,7 +305,8 @@ textarea { min-height: 90px; font-size: 13px; font-family: ui-monospace, Menlo, 
   }
 
   /* ---------- 상태 ---------- */
-  var view = 'day', cursor = todayStr(), adding = null, focusAdd = false;
+```js
+  var view = 'week', cursor = todayStr(), adding = null, focusAdd = false;
 
   function periodTitle() {
     var d = parse(cursor);
@@ -651,7 +659,8 @@ textarea { min-height: 90px; font-size: 13px; font-family: ui-monospace, Menlo, 
     var demo = h('span', { class: 'circle' }, '3');
     function paintDemo() { demo.style.background = pc; demo.style.color = textOn(pc); }
     paintDemo();
-    var cf = colorField(pc, function (v) { pc = v; S.settings.pastColor = v; persist(); paintDemo(); render(); });
+```js
+    var cf = colorField(pc, function (v) { pc = v; S.settings.pastColor = v; applyAccent(v); persist(); paintDemo(); render(); });
     var ta = h('textarea', { id: 'backupBox', placeholder: '복원할 때는 백업 내용을 여기에 붙여넣으세요', 'aria-label': '백업 내용' });
     var msg = h('p', { class: 'msg', role: 'status' });
     var armed = false;
@@ -683,8 +692,10 @@ textarea { min-height: 90px; font-size: 13px; font-family: ui-monospace, Menlo, 
       h('div', { class: 'btns' }, h('button', { type: 'button', class: 'primary', onclick: closeSheet }, '닫기'))
     ]);
   }
+```js
   $('openSettings').addEventListener('click', openSettings);
 
+  applyAccent(S.settings.pastColor);
   persist();
   render();
 })();
